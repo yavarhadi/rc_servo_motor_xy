@@ -11,7 +11,7 @@ ifneq ($(GATES),yes)
 
 # RTL simulation:
 SIM_BUILD				= sim_build/rtl
-VERILOG_SOURCES += $(addprefix $(SRC_DIR)/tb.v $(SRC_DIR)/tt_um_rc_servo_motor_xy_ea.v)
+VERILOG_SOURCES += $(PWD)/tb.v $(PWD)/../src/tt_um_rc_servo_motor_xy_ea.v)
 
 else
 
@@ -34,7 +34,7 @@ endif
 COMPILE_ARGS 		+= -I$(SRC_DIR)
 
 # Include the testbench sources:
-VERILOG_SOURCES += $(PWD)/../test/tb.v
+VERILOG_SOURCES += $(PWD)/tb.v
 TOPLEVEL = tb
 
 # List test modules to run, separated by commas and without the .py suffix:
