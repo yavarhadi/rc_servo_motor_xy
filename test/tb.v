@@ -29,7 +29,7 @@ module tb ();
 `endif
 
   // Replace tt_um_example with your module name:
-  tt_um_rc_servo_motor_xy_ea (
+  tt_um_rc_servo_motor_xy_ea user_project (
 
       // Include power ports for the Gate Level test:
 `ifdef GL_TEST
