@@ -27,7 +27,7 @@ module tb ();
     wire [7:0] uo_out;
     wire [7:0] uio_out;
     wire [7:0] uio_oe;
-    wire [3:0] counter_out = uo_out[3:0];
+  
   `ifdef GL_TEST
     wire VPWR = 1'b1;
     wire VGND = 1'b0;
