@@ -4,19 +4,18 @@
 # defaults
 SIM ?= icarus
 TOPLEVEL_LANG ?= verilog
-SRC_DIR = $(PWD)/../src
+SRC_DIR := ../src
 PROJECT_SOURCES = tt_um_rc_servo_motor_xy_ea.v
 
 ifneq ($(GATES),yes)
 
 # RTL simulation:
-SIM_BUILD				= sim_build/rtl
-VERILOG_SOURCES += $(PWD)/tb.v $(PWD)/../src/tt_um_rc_servo_motor_xy_ea.v
+VERILOG_SOURCES += $(PWD)/tb.v $(SRC_DIR)/tt_um_rc_servo_motor_xy_ea.v
 
 else
 
 # Gate level simulation:
-SIM_BUILD				= sim_build/gl
+
 COMPILE_ARGS    += -DGL_TEST
 COMPILE_ARGS    += -DFUNCTIONAL
 COMPILE_ARGS    += -DUSE_POWER_PINS
@@ -31,10 +30,10 @@ VERILOG_SOURCES +=  $(PWD)/tb.v $(PWD)/gate_level_netlist.v
 endif
 
 # Allow sharing configuration between design and testbench via `include`:
-COMPILE_ARGS 		+= -I$(SRC_DIR)
+#COMPILE_ARGS 		+= -I$(SRC_DIR)
 
 # Include the testbench sources:
-VERILOG_SOURCES += $(PWD)/tb.v
+#VERILOG_SOURCES += $(PWD)/tb.v
 TOPLEVEL = tb
 
 # List test modules to run, separated by commas and without the .py suffix:
