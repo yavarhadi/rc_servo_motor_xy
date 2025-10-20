@@ -25,8 +25,8 @@ project:
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: "comp_async_x"
-  ui[1]: "comp_async_y"
+  ui[0]: "comp_async_x_i"
+  ui[1]: "comp_async_y_i"
   ui[2]: ""
   ui[3]: ""
   ui[4]: ""
@@ -35,8 +35,8 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: "pwm_x"
-  uo[1]: "pwm_y"
+  uo[0]: "pwm_pin_x_o"
+  uo[1]: "pwm_pin_y_o"
   uo[2]: ""
   uo[3]: ""
   uo[4]: ""
