@@ -4,7 +4,7 @@
 
 /*
 this testbench just just instantiates the module and makes some convenient wires
-that can be driven / tested by the cocotb test.py
+
 */
 
 // testbench is controlled by test.py
@@ -33,12 +33,14 @@ module tb ();
      wire VGND = 1'b0;
    `endif
 
-    tt_um_rc_servo_motor_xy_ea (
+    tt_um_rc_servo_motor_xy_ea dut(
     // include power ports for the Gate Level test
+
     `ifdef GL_TEST
         .VPWR(VPWR),
         .VGND(VGND),
     `endif
+
         .ui_in      (ui_in),    // Dedicated inputs
         .uo_out     (uo_out),   // Dedicated outputs
         .uio_in     (uio_in),   // IOs: Input path
