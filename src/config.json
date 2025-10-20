@@ -1,7 +1,11 @@
 
 {
-	 "DESIGN_NAME": "rc_servo_xy",
-        "VERILOG_FILES": "dir::../verilog/src/tt_um_rc_servo_xy_ea.v",
+	 "DESIGN_NAME": "tt_um_rc_servo_motor_xy_ea",
+          "VERILOG_FILES": [
+           "dir::tt_um_rc_servo_motor_xy_ea.v",             
+           "dir::rc_servo_core_xy.v"
+          ],
+
         "DIE_AREA": "0 0 320 200",
 
         "PNR_SDC_FILE": "dir::impl.sdc",
