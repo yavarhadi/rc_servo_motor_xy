@@ -8,7 +8,7 @@ that can be driven / tested by the cocotb test.py
 */
 
 // testbench is controlled by test.py
- module tb ();
+module tb ();
 
     // this part dumps the trace to a vcd file that can be viewed with GTKWave
    initial begin
@@ -28,10 +28,10 @@ that can be driven / tested by the cocotb test.py
     wire [7:0] uio_out;
     wire [7:0] uio_oe;
   
-  `ifdef GL_TEST
-    wire VPWR = 1'b1;
-    wire VGND = 1'b0;
-  `endif
+   `ifdef GL_TEST
+     wire VPWR = 1'b1;
+     wire VGND = 1'b0;
+   `endif
 
     tt_um_rc_servo_motor_xy_ea (
     // include power ports for the Gate Level test
@@ -49,4 +49,4 @@ that can be driven / tested by the cocotb test.py
         .rst_n      (rst_n)     // not reset
         );
 
- endmodule
+endmodule
