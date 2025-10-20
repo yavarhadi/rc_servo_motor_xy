@@ -1,6 +1,6 @@
 // src/tt_um_rc_servo_motor_xy_ea.v
-`timescale 1ns/1ps
 `default_nettype none
+`timescale 1ns/1ps
 
 module tt_um_rc_servo_motor_xy_ea (
     input  wire [7:0] ui_in,
