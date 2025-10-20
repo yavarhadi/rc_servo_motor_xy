@@ -1,5 +1,6 @@
 # Tiny Tapeout piroject information
 project:
+  wokwi_id:    0
   title:        "rc_servo_motor_xy"      # Project title
   author:       "Yavar Hadi"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)

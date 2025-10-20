@@ -33,7 +33,7 @@ module tb ();
     wire VGND = 1'b0;
   `endif
 
-    tt_um_rc_servo_motor_xy_ea dut (
+    tt_um_rc_servo_motor_xy_ea (
     // include power ports for the Gate Level test
     `ifdef GL_TEST
         .VPWR(VPWR),
