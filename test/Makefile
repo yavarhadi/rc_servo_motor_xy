@@ -10,7 +10,7 @@ PROJECT_SOURCES = tt_um_rc_servo_motor_xy_ea.v
 ifneq ($(GATES),yes)
 
 # RTL simulation:
-VERILOG_SOURCES :=\ $(PWD)/tb.v\
+VERILOG_SOURCES :=\
 		  $(SRC_DIR)/tt_um_rc_servo_motor_xy_ea.v\
 		  $(SRC_DIR)/rc_servo_core_xy.v
 
@@ -36,7 +36,8 @@ endif
 
 # Include the testbench sources:
 #VERILOG_SOURCES += $(PWD)/tb.v
-TOPLEVEL = tb
+TOPLEVEL = tt_um_rc_servo_motor_xy_ea
+
 
 # List test modules to run, separated by commas and without the .py suffix:
 COCOTB_TEST_MODULES = test
