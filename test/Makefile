@@ -37,7 +37,7 @@ endif
 
 # Include the testbench sources:
 #VERILOG_SOURCES += $(PWD)/tb.v
-TOPLEVEL =tt_um_rc_servo_motor_xy_ea
+TOPLEVEL =tb
 
 
 # List test modules to run, separated by commas and without the .py suffix:
