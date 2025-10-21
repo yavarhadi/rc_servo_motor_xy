@@ -25,7 +25,7 @@ module tt_um_rc_servo_motor_xy_ea (
     wire pwm_x, pwm_y;
 
     // Instantiate your existing design as a core
-    rc_servo_core_xy (
+    rc_servo_core_xy core (
         .clk_i         (clk),
         .reset_i       (reset_i),
         .comp_async_x_i(comp_async_x_i),
