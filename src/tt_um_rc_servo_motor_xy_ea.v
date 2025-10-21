@@ -1,6 +1,6 @@
 // src/tt_um_rc_servo_motor_xy_ea.v
 `default_nettype none
-`include "rc_servo_core_xy.v"
+//`include "rc_servo_core_xy.v"
 
 
 module tt_um_rc_servo_motor_xy_ea (
