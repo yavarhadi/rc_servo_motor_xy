@@ -10,7 +10,9 @@ PROJECT_SOURCES = tt_um_rc_servo_motor_xy_ea.v
 ifneq ($(GATES),yes)
 
 # RTL simulation:
-VERILOG_SOURCES += $(PWD)/tb.v $(SRC_DIR)/tt_um_rc_servo_motor_xy_ea.v $(SRC_DIR)/rc_servo_core_xy.v
+VERILOG_SOURCES :=\ $(PWD)/tb.v\
+		  $(SRC_DIR)/tt_um_rc_servo_motor_xy_ea.v\
+		  $(SRC_DIR)/rc_servo_core_xy.v
 
 else
 
