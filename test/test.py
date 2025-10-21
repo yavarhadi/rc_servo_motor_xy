@@ -1,40 +1,56 @@
-# SPDX-FileCopyrightText: © 2024 Tiny Tapeout
-# SPDX-License-Identifier: Apache-2.0
-
+# test/test.py
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
-
+from cocotb.triggers import RisingEdge, FallingEdge, Timer, First
 
 @cocotb.test()
-async def rc_servo_moto_test(dut):
-    dut._log.info("Start")
+async def smoke(dut):
+    """
+    Very loose sanity test:
+    - drive 50 MHz clock (20 ns)
+    - release reset
+    - wiggle ui_in[0]/ui_in[1] a bit
+    - observe that uo_out[0] toggles at least once within ~60 ms
+    """
+    # 50 MHz to match 1_000_000 tick 20 ms period in your RTL
+    cocotb.start_soon(Clock(dut.clk, 20, units="ns").start())
 
-    # Set the clock period to 10 us (100 KHz)
-    clock = Clock(dut.clk, 20, unit="ns")
-    cocotb.start_soon(clock.start())
-
-    # Reset
-    dut._log.info("Reset")
-    dut.ena.value = 1
+    # default states
+    dut.ena.value   = 1
     dut.ui_in.value = 0
     dut.uio_in.value = 0
+
+    # reset low-active
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 10)
+    await Timer(200, units="ns")
     dut.rst_n.value = 1
 
-    dut._log.info("Test project behavior")
+    # Give the design time to settle
+    for _ in range(2000):
+        await RisingEdge(dut.clk)
 
-    # Set the input values you want to test
-    dut.ui_in.value = 20
-    dut.uio_in.value = 30
+    # Wiggle comparator inputs to create some activity
+    async def drive_inputs():
+        for i in range(100_000):  # ~2 ms @ 50 MHz
+            dut.ui_in.value = (i & 1) | (((i >> 1) & 1) << 1)
+            await RisingEdge(dut.clk)
 
-    # Wait for one clock cycle to see the output values
-    await ClockCycles(dut.clk, 1)
+    drv = cocotb.start_soon(drive_inputs())
 
-    # The following assersion is just an example of how to check the output values.
-    # Change it to match the actual expected output of your module:
-    assert dut.uo_out.value == 50
+    # We expect a PWM with ~20 ms period.
+    # Wait up to 60 ms for any transition on uo_out[0].
+    # (Very loose — just proves the block is alive.)
+    timeout = Timer(60, units="ms")
+    evt = await First(RisingEdge(dut.uo_out[0]),
+                      FallingEdge(dut.uo_out[0]),
+                      timeout)
 
-    # Keep testing the module by changing the input values, waiting for
-    # one or more clock cycles, and asserting the expected output values.
+    assert evt is not timeout, "PWM output (uo_out[0]) never toggled within 60 ms"
+
+    # Optional: wait another frame and make sure it toggles again
+    timeout2 = Timer(40, units="ms")
+    evt2 = await First(RisingEdge(dut.uo_out[0]),
+                       FallingEdge(dut.uo_out[0]),
+                       timeout2)
+    assert evt2 is not timeout2, "PWM output failed to toggle again"
+
