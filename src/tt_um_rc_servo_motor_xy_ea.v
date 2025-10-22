@@ -20,7 +20,7 @@ module tt_um_rc_servo_motor_xy_ea (
     // Map TT pins → your core pins
     wire comp_async_x_i = ui_in[0];
     wire comp_async_y_i = ui_in[1];
-
+    wire _unused_ok = &{1'b0, ui_in[7:2], uio_in 
     // Your core expects active-high reset_i; TT gives active-low rst_n
     wire reset_i = ~rst_n;
 
