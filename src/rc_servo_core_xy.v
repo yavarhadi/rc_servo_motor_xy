@@ -685,6 +685,7 @@ module rc_servo_core_xy (
    input  comp_async_y_i,
    output pwm_pin_x_o,
    output pwm_pin_y_o);
+  wire unused_pwm_x, unused_pwm_y;
   wire adc_valid_strb_x;
   wire adc_valid_strb_y;
   wire [7:0] adc_value_x;
@@ -713,8 +714,8 @@ module rc_servo_core_xy (
     .reset_i(reset_n),
     .comp_async_x_i(comp_async_x_i),
     .comp_async_y_i(comp_async_y_i),
-    .pwm_x_o(),
-    .pwm_y_o(),
+    .pwm_x_o(unused_pwm_x),
+    .pwm_y_o(unused_pwm_y),
     .adc_valid_strb_x_o(adc_valid_strb_x),
     .adc_valid_strb_y_o(adc_valid_strb_y),
     .adc_value_x_o(adc_value_x),
