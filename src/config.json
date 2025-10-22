@@ -2,7 +2,7 @@
 {
     "DESIGN_NAME": "tt_um_rc_servo_motor_xy_ea",
     "VERILOG_FILES": "dir::tt_um_rc_servo_motor_xy_ea.v dir::rc_servo_core_xy.v",			  
-     "DIE_AREA": "0 0 320 200",
+     "DIE_AREA": "0 0 320 300",
 
      "PNR_SDC_FILE": "dir::impl.sdc",
      "SIGNOFF_SDC_FILE": "dir::signoff.sdc",
