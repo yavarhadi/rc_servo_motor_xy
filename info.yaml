@@ -4,7 +4,7 @@ project:
   title:        "rc_servo_motor_xy"      # Project title
   author:       "Yavar Hadi"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "rc servo motor chip "      # One line description of what your project does
+  description:  "rc servo motor chip  "      # One line description of what your project does
   language:     "Verilog" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     50000000       # Clock frequency in Hz (or 0 if not applicable)
 
