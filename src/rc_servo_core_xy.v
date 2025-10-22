@@ -714,13 +714,13 @@ module rc_servo_core_xy (
     .reset_i(reset_n),
     .comp_async_x_i(comp_async_x_i),
     .comp_async_y_i(comp_async_y_i),
-    .pwm_x_o(unused_pwm_x),
-    .pwm_y_o(unused_pwm_y),
+  //  .pwm_x_o(unused_pwm_x),
+  //  .pwm_y_o(unused_pwm_y),
     .adc_valid_strb_x_o(adc_valid_strb_x),
     .adc_valid_strb_y_o(adc_valid_strb_y),
     .adc_value_x_o(adc_value_x),
     .adc_value_y_o(adc_value_y));
-  wire _unused_core = &{1'b0, unused_pwm_x, unused_pwm_y};
+//  wire _unused_core = &{1'b0, unused_pwm_x, unused_pwm_y};
   /* ../../vhdl/rtl/rc_servo_xy_ea.vhd:60:17  */
   holdvalueonstrb holdvalue_x_port (
     .clk_i(clk_i),
