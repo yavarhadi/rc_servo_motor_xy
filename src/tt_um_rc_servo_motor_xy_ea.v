@@ -45,7 +45,7 @@ module tt_um_rc_servo_motor_xy_ea (
         1'b0,                          // uo_out[2] spare
         (ena ? pwm_pin_y : 1'b0),      // uo_out[1]
         (ena ? pwm_pin_x : 1'b0)       // uo_out[0]
-    }
+    };
 
 endmodule
 `default_nettype wire
