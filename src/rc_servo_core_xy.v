@@ -602,7 +602,7 @@ module delta_adc_xy
     .data_o(\moving_average_y_port.data_o ));
 endmodule
 
-module rc_serv_core_xy
+module rc_servo_core_xy
   (input  clk_i,
    input  reset_i,
    input  comp_async_x_i,
