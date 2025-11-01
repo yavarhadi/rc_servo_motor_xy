@@ -24,8 +24,7 @@ module tt_um_rc_servo_motor_xy_ea (
     wire reset_i = ~rst_n;
     wire pwm_x, pwm_y;
     wire pwm_pin_x, pwm_pin_y;
-    wire _unused_ok = &{1'b0, ui_in[7:2], uio_in};
-
+    wire _unused_ok = &{1'b0, ui_in[7:2], uio_in, pwm_x, pwm_y};
     // Instantiate your existing design as a core
     rc_servo_core_xy core (
         .clk_i         (clk),
