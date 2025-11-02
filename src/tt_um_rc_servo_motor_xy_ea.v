@@ -22,18 +22,18 @@ module tt_um_rc_servo_motor_xy_ea (
     wire comp_async_x_i = ui_in[0];
     wire comp_async_y_i = ui_in[1];
     //core expects active-high reset_i; TT gives active-low rst_n
-    wire reset_i = ~rst_n;
+   // wire reset_i = ~rst_n;
     wire pwm_x, pwm_y;
     wire pwm_pin_x, pwm_pin_y;
-    wire _unused_ok = &{1'b0, ui_in[7:2], uio_in, pwm_x, pwm_y};
+    wire _unused_ok = &{1'b0, ui_in[7:2], uio_in};
     // Instantiate your existing design as a core
     rc_servo_core_xy core (
         .clk_i         (clk),
         .reset_i       (reset_i),
         .comp_async_x_i(comp_async_x_i),
         .comp_async_y_i(comp_async_y_i),
-        .pwm_x_o        (pwm_x),      //unused-internal
-        .pwm_y_o        (pwm_y),     // unused-internal  
+        .pwm_x_o        (pwm_x),      
+        .pwm_y_o        (pwm_y),       
 	.pwm_pin_x_o    (pwm_pin_x),
         .pwm_pin_y_o    (pwm_pin_y)
     );
@@ -41,8 +41,8 @@ module tt_um_rc_servo_motor_xy_ea (
         // Gate user outputs by ena (TT convention)
     assign uo_out = {
         4'b0000,                       // uo_out[7:4] free/debug
-        1'b0,                          // uo_out[3] spare
-        1'b0,                          // uo_out[2] spare
+        (ena ? pwm_y : 1'b0)           // uo_out[3] 
+        (ena ? pwm_x : 1'b0)           // uo_out[2] 
         (ena ? pwm_pin_y : 1'b0),      // uo_out[1]
         (ena ? pwm_pin_x : 1'b0)       // uo_out[0]
     };
