@@ -607,10 +607,10 @@ module rc_servo_core_xy
    input  reset_i,
    input  comp_async_x_i,
    input  comp_async_y_i,
-   output pwm_x_o,        // goes to comprator
-   output pwm_y_o,        //goes to comprator
-   output pwm_pin_x_o,   // geht zum motor
-   output pwm_pin_y_o);  // geht zum motor
+   output pwm_x_o,        // goes to comparator1
+   output pwm_y_o,        //goes to comparator2
+   output pwm_pin_x_o,   // to  motor1
+   output pwm_pin_y_o);  // to motor2
   wire adc_valid_strb_x;
   wire adc_valid_strb_y;
   wire [7:0] adc_value_x;
