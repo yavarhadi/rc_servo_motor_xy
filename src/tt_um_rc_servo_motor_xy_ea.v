@@ -41,8 +41,8 @@ module tt_um_rc_servo_motor_xy_ea (
         // Gate user outputs by ena (TT convention)
     assign uo_out = {
         4'b0000,                       // uo_out[7:4] free/debug
-        (ena ? pwm_y : 1'b0)           // uo_out[3] 
-        (ena ? pwm_x : 1'b0)           // uo_out[2] 
+        (ena ? pwm_y : 1'b0),           // uo_out[3] 
+        (ena ? pwm_x : 1'b0),           // uo_out[2] 
         (ena ? pwm_pin_y : 1'b0),      // uo_out[1]
         (ena ? pwm_pin_x : 1'b0)       // uo_out[0]
     };
