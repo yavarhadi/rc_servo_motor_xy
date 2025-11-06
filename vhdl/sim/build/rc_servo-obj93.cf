@@ -1,0 +1,45 @@
+v 4
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/rc_servo_xy_ea.vhd" "f35c8cff42ee338c891b64378f05ae3b805274ce" "20251103182310.905":
+  entity rc_servo_xy at 1( 0) + 0 on 65;
+  architecture rtl_rc_servo_xy of rc_servo_xy at 24( 469) + 0 on 66;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/Tilt_ea.vhd" "7e5486af73fb70d18d777b7c2609602cfad85dc6" "20251103182310.819":
+  entity tilt at 1( 0) + 0 on 61;
+  architecture rtl_tilt of tilt at 21( 474) + 0 on 62;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/Delta_ADC_XY_ea.vhd" "4b49faad7bccae4e4c7dc356688e6f90d5c60439" "20251103182310.737":
+  entity delta_adc_xy at 1( 0) + 0 on 57;
+  architecture rtl_delta_adc_xy of delta_adc_xy at 26( 725) + 0 on 58;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/filter_shift_register_ea.vhd" "48f9c6489339e83eb8ae02034ff065a1674da702" "20251103182310.641":
+  entity filter_shift_register at 1( 0) + 0 on 53;
+  architecture rtl_filter_shift of filter_shift_register at 21( 429) + 0 on 54;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/synchonizer_ea.vhd" "c3507b42840e0deb8643fa7fa7bb7a6502c0ecd0" "20251103182310.572":
+  entity synchronizer at 1( 0) + 0 on 49;
+  architecture rtl_synchronizer of synchronizer at 20( 385) + 0 on 50;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/d_ff_ea.vhd" "e7398a8b50cac765063622876875a51c2c9d6b1c" "20251103182310.506":
+  entity dff at 1( 0) + 0 on 45;
+  architecture dff_rtl of dff at 18( 259) + 0 on 46;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/strb_ea.vhd" "d8ded413540cade6dbb367289603ae3d126196bd" "20251103182310.429":
+  entity strb_generator at 1( 0) + 0 on 41;
+  architecture strb_generator_behav of strb_generator at 20( 314) + 0 on 42;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/std_def_p.vhd" "fcf72b692d80972504076f66cbac6a0144bc18fe" "20251103182310.407":
+  package std_definitions at 1( 0) + 0 on 40;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/pwm_ea.vhd" "aa19956b3a8744cebee7a92131e2bc97fc353fbd" "20251103182310.467":
+  entity pwm at 1( 0) + 0 on 43;
+  architecture pwm_behav of pwm at 21( 415) + 0 on 44;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/adc_value_ea.vhd" "9ef387896614bab4ca699dcd1612577e75ade501" "20251103182310.528":
+  entity adc_value at 1( 0) + 0 on 47;
+  architecture adc_value_behav of adc_value at 21( 371) + 0 on 48;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/DeltaADC_ea.vhd" "8dc9e3446ec1a59a15ce786f1d9aa9f181a543fd" "20251103182310.605":
+  entity deltaadc at 1( 0) + 0 on 51;
+  architecture deltaadc_rtl of deltaadc at 24( 460) + 0 on 52;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/moving_average_ea.vhd" "87479f6701e967ee727c0fd6603aeab5f8ca7763" "20251103182310.678":
+  entity moving_average at 1( 0) + 0 on 55;
+  architecture moving_average_rtl of moving_average at 22( 526) + 0 on 56;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/HoldValueOnStrb_ea.vhd" "c83d1bb477171cd460d35e374cb55f51577f3da3" "20251103182310.781":
+  entity holdvalueonstrb at 1( 0) + 0 on 59;
+  architecture rtl_holdvalueonstrb of holdvalueonstrb at 22( 490) + 0 on 60;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "../rtl/servo_control_ea.vhd" "3b71f02e9e62214990fb9b1b03e1b22c740f07ad" "20251103182310.865":
+  entity servo_control at 1( 0) + 0 on 63;
+  architecture rtl_servo_control of servo_control at 21( 442) + 0 on 64;
+file "/foss/designs/last_modified_01.11.2026/rc_servo/vhdl/sim/" "./rc_servo_xy_tb.vhd" "8e8e9981dca704a08b67497e09cb4fabaddedf93" "20251103182310.968":
+  entity rc_servo_xy_tb at 1( 0) + 0 on 67;
+  architecture rtl_tb of rc_servo_xy_tb at 12( 192) + 0 on 68;
