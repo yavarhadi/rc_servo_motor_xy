@@ -1,21 +1,33 @@
+
+//Single-stage "load-on-strobe, else-hold" register used as a filter tap.
+
 module filter_shift_register
   (input  clk_i,
-   input  reset_i,
-   input  strb_data_valid_i,
+   input  reset_i,             //async reset
+   input  strb_data_valid_i,   // when 1, capture data_i
    input  [7:0] data_i,
    output [7:0] data_o);
+
+// Internal wires/regs created by the conversion
   wire [7:0] data;
   wire [7:0] next_data;
   wire [7:0] n258;
   reg [7:0] n260;
+
+// Drive the module output from the internal reg
   assign data_o = data; //(module output)
   /* ../../vhdl/rtl/filter_shift_register_ea.vhd:23:16  */
+
+// Readback of the state register (n260) into 'data'  
   assign data = n260; // (signal)
   /* ../../vhdl/rtl/filter_shift_register_ea.vhd:23:22  */
+  // Decide next state: on valid strobe take new data, else keep old
   assign next_data = n258; // (signal)
   /* ../../vhdl/rtl/filter_shift_register_ea.vhd:40:33  */
   assign n258 = strb_data_valid_i ? data_i : data;
   /* ../../vhdl/rtl/filter_shift_register_ea.vhd:31:33  */
+
+// State register with async reset to 0
   always @(posedge clk_i or posedge reset_i)
     if (reset_i)
       n260 <= 8'b00000000;
@@ -23,15 +35,20 @@ module filter_shift_register
       n260 <= next_data;
 endmodule
 
+
+
+// 8-bit PWM: output=1 while counter < on_counter_val_i; period set by period_counter_val_i.
+
 module pwm
   (input  clk_i,
    input  reset_i,
-   input  [7:0] period_counter_val_i,
+   input  [7:0] period_counter_val_i,  // terminal count + 1
    input  [7:0] on_counter_val_i,
    output pwm_pin_o);
+
   reg [7:0] clk_cnt;
-  reg [7:0] next_clk_cnt;
-  reg pwm_output;
+  reg [7:0] next_clk_cnt;      // free-running counter & next
+  reg pwm_output;             
   wire n237;
   wire n240;
   wire [7:0] n242;
@@ -39,8 +56,12 @@ module pwm
   wire [7:0] n245;
   wire [7:0] n247;
   reg [7:0] n249;
+
+// Drive output
   assign pwm_pin_o = pwm_output; //(module output)
   /* ../../vhdl/rtl/pwm_ea.vhd:23:16  */
+
+// Read the registered state into working signals
   always @*
     clk_cnt = n249; // (isignal)
   initial
@@ -56,17 +77,24 @@ module pwm
   initial
     pwm_output = 1'b0;
   /* ../../vhdl/rtl/pwm_ea.vhd:44:44  */
+
+ // Output is high while counter < on_counter_val_i 
   assign n237 = $unsigned(clk_cnt) < $unsigned(on_counter_val_i);
   /* ../../vhdl/rtl/pwm_ea.vhd:44:33  */
   assign n240 = n237 ? 1'b1 : 1'b0;
   /* ../../vhdl/rtl/pwm_ea.vhd:50:66  */
+
+  // Compute terminal count = period-1
   assign n242 = period_counter_val_i - 8'b00000001;
   /* ../../vhdl/rtl/pwm_ea.vhd:50:44  */
   assign n243 = $unsigned(clk_cnt) < $unsigned(n242);
   /* ../../vhdl/rtl/pwm_ea.vhd:51:65  */
+  
+    // increment/wrap to 0
   assign n245 = clk_cnt + 8'b00000001;
   /* ../../vhdl/rtl/pwm_ea.vhd:50:33  */
   assign n247 = n243 ? n245 : 8'b00000000;
+// The counter register
   /* ../../vhdl/rtl/pwm_ea.vhd:35:25  */
   always @(posedge clk_i or posedge reset_i)
     if (reset_i)
@@ -93,8 +121,8 @@ endmodule
 module adc_value
   (input  clk_i,
    input  reset_i,
-   input  comparator_i,
-   input  strb_i,
+   input  comparator_i,                   // 1 => need to go up; 0 => go down
+   input  strb_i,                         // 1 => need to go up; 0 => go down
    output [7:0] adc_value_o);
   reg [7:0] adc_value_state;
   reg [7:0] next_adc_value;
@@ -119,18 +147,24 @@ module adc_value
   initial
     next_adc_value = 8'b11111111;
   /* ../../vhdl/rtl/adc_value_ea.vhd:44:52  */
+  
+  //Upper cap check (0xFA)
   assign n205 = adc_value_state == 8'b11111010;
   /* ../../vhdl/rtl/adc_value_ea.vhd:47:74  */
   assign n207 = adc_value_state + 8'b00000001;
   /* ../../vhdl/rtl/adc_value_ea.vhd:44:33  */
   assign n208 = n205 ? adc_value_state : n207;
   /* ../../vhdl/rtl/adc_value_ea.vhd:50:52  */
+ 
+ // Lower cap check (0x00)
   assign n210 = adc_value_state == 8'b00000000;
   /* ../../vhdl/rtl/adc_value_ea.vhd:53:74  */
   assign n212 = adc_value_state - 8'b00000001;
   /* ../../vhdl/rtl/adc_value_ea.vhd:50:33  */
   assign n213 = n210 ? adc_value_state : n212;
   /* ../../vhdl/rtl/adc_value_ea.vhd:43:25  */
+ 
+  // Select up/down by comparator; then gate by strobe
   assign n214 = comparator_i ? n208 : n213;
   /* ../../vhdl/rtl/adc_value_ea.vhd:42:17  */
   assign n215 = strb_i ? n214 : adc_value_state;
@@ -142,15 +176,18 @@ module adc_value
       n217 <= next_adc_value;
 endmodule
 
+
+// 4-sample moving average over 8-bit inputs.
+//  holds a 32-bit concatenation of the four last bytes via 4 registers(Internally ).
 module moving_average
   (input  clk_i,
    input  reset_i,
-   input  strb_data_valid_i,
+   input  strb_data_valid_i,                // load-enable for new sample
    input  [7:0] data_i,
-   output strb_data_valid_o,
-   output [7:0] data_o);
-  reg [31:0] moving_average_value;
-  reg [7:0] data_o_reg;
+   output strb_data_valid_o,                // strobe retimed to clk_i
+   output [7:0] data_o);                     // average of 4 samples 
+  reg [31:0] moving_average_value;            // {x3,x2,x1,x0}
+  reg [7:0] data_o_reg;                          // output register
   reg strb_data_valid_o_reg;
   wire [7:0] \gen_reg_0_register_i0.data_o ;
   wire [7:0] \gen_reg_rest_gen_regs_n1_register_i.data_o ;
@@ -197,6 +234,8 @@ module moving_average
   initial
     strb_data_valid_o_reg = 1'b0;
   /* ../../vhdl/rtl/moving_average_ea.vhd:58:17  */
+
+  // Shift-register bank: on strobe, push new sample and shift old taps
   filter_shift_register gen_reg_0_register_i0 (
     .clk_i(clk_i),
     .reset_i(reset_i),
@@ -251,7 +290,7 @@ module moving_average
   /* ../../vhdl/rtl/moving_average_ea.vhd:100:73  */
   assign n174 = moving_average_value[7:0]; // extract
   /* ../../vhdl/rtl/moving_average_ea.vhd:100:46  */
-  assign n175 = {2'b0, n174};  //  uext
+  assign n175 = {2'b0, n174};  //  uext                           
   /* ../../vhdl/rtl/moving_average_ea.vhd:100:44  */
   assign n176 = n173 + n175;
   /* ../../vhdl/rtl/moving_average_ea.vhd:105:62  */
@@ -264,6 +303,7 @@ module moving_average
   assign n183 = reset_i ? 8'b00000000 : n180;
   /* ../../vhdl/rtl/moving_average_ea.vhd:88:13  */
   assign n185 = reset_i ? 1'b0 : strb_data_valid_i;
+    // Output ports
   assign n191 = {\gen_reg_0_register_i0.data_o , \gen_reg_rest_gen_regs_n1_register_i.data_o , \gen_reg_rest_gen_regs_n2_register_i.data_o , \gen_reg_rest_gen_regs_n3_register_i.data_o };
   /* ../../vhdl/rtl/moving_average_ea.vhd:87:9  */
   always @(posedge clk_i)
@@ -277,13 +317,15 @@ module moving_average
     n193 = 1'b0;
 endmodule
 
+// Wrapper that ties adc_value + dff + pwm together for a single axis.
+
 module deltaadc
   (input  clk_i,
    input  reset_i,
-   input  comparator_i,
+   input  comparator_i,                // 1-bit feedback from off-chip comparator 
    input  strb_signal_i,
-   output adc_valid_strb_o,
-   output pwm_o,
+   output adc_valid_strb_o,                // dff-aligned version of strobe
+   output pwm_o,                           // 8-bit PWM bitstream (goes off-chip to LPF+comp)
    output [7:0] adc_value_o);
   wire [7:0] adc_value_signal;
   wire \d_ff_port.q_o ;
@@ -292,6 +334,8 @@ module deltaadc
   assign adc_valid_strb_o = \d_ff_port.q_o ; //(module output)
   assign pwm_o = \pwm_port.pwm_pin_o ; //(module output)
   assign adc_value_o = adc_value_signal; //(module output)
+
+  // Delta integrator
   /* ../../vhdl/rtl/DeltaADC_ea.vhd:30:17  */
   adc_value adc_value_port (
     .clk_i(clk_i),
@@ -300,12 +344,16 @@ module deltaadc
     .strb_i(strb_signal_i),
     .adc_value_o(adc_value_signal));
   /* ../../vhdl/rtl/DeltaADC_ea.vhd:39:17  */
+
+    // Align strobe to clock (one-cycle pulse)
   dff d_ff_port (
     .clk_i(clk_i),
     .reset_i(reset_i),
     .d_i(strb_signal_i),
     .q_o(\d_ff_port.q_o ));
   /* ../../vhdl/rtl/DeltaADC_ea.vhd:47:17  */
+  
+  // PWM whose duty equals the current 8-bit code
   pwm pwm_port (
     .clk_i(clk_i),
     .reset_i(reset_i),
